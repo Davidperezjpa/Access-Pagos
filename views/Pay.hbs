@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Payment</title>
+</head>
+<body>
+    <h1>Please pay.</h1>
+    <form action ="/charge" method="post">
+        <script
+         src = "https://checkout.stripe.com/checkout.js" 
+         class = "stripe-button" 
+         data-key = "pk_test_VZq2bhDNNcAXTSrVeAYGu8Ui004Nf2Cb5j"
+         
+         data-name = "product"
+         data-description = "this is the best product"
+         data-locale= "auto"
+         data-currency="usd"
+         ></script>
+         <input name ="chargeAmount" value = "1000">
+ 
+     </form>
+</body>
+</html>

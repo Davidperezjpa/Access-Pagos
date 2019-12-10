@@ -1,0 +1,66 @@
+var express = require('express');
+var stripe = require('stripe')('sk_test_C3CLDSDRliHNPU3kSVVLlgxZ0007diIGot');
+var hbs = require('hbs');
+var bodyParser = require('body-parser');
+
+var app = express();
+
+
+//const stripeSecretKey = process.env.STRIPE_SECRET_KEY
+//const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
+
+app.set('view engine','hbs');
+app.set('views',__dirname + '/views');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:false}));
+
+
+app.get('/', function(req,res){
+  res.render('Pay',{});
+});
+
+app.get('/paysuccess', function(req,res){
+  res.render('paymentsuccessful',{});
+})
+
+app.post('/charge', function (req,res){
+  var token = req.body.stripeToken;
+  var chargeAmount = req.body.chargeAmount;
+  var charge = stripe.charges.create({
+      amount: chargeAmount,
+      currency: "usd",
+      source: token
+  }, function(err, charge){
+    if(err & err.type === "StripeCardError"){
+      console.log("your card was declined");
+    }
+  });
+  console.log("your payment was successful");
+  res.redirect('/paysuccess');
+});
+
+
+
+
+/*
+app.post('/purchase', function(req, res) {
+  var total = 100;
+  stripe.charges.create({
+    amount: total,
+    source: req.body.stripeTokenId,
+    currency: 'usd'
+  }).then(function() {
+    console.log('Charge Successful')
+    res.json({ message: 'Successfully purchased items' })
+  }).catch(function() {
+    console.log('Charge Fail')
+    res.status(500).end()
+  })
+})
+*/
+
+var server = app.listen(3000, function () {
+    var host = server.address().address
+    var port = server.address().port
+    console.log("Example app listening at http://%s:%s", host, port)
+});
