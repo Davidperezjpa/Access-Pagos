@@ -2,8 +2,9 @@ var express = require('express');
 var stripe = require('stripe')('sk_test_C3CLDSDRliHNPU3kSVVLlgxZ0007diIGot');
 var hbs = require('hbs');
 var bodyParser = require('body-parser');
-
 var app = express();
+
+var PORT = process.env.PORT || 3000;
 
 
 //const stripeSecretKey = process.env.STRIPE_SECRET_KEY
@@ -40,26 +41,7 @@ app.post('/charge', function (req,res){
 });
 
 
-
-
-/*
-app.post('/purchase', function(req, res) {
-  var total = 100;
-  stripe.charges.create({
-    amount: total,
-    source: req.body.stripeTokenId,
-    currency: 'usd'
-  }).then(function() {
-    console.log('Charge Successful')
-    res.json({ message: 'Successfully purchased items' })
-  }).catch(function() {
-    console.log('Charge Fail')
-    res.status(500).end()
-  })
-})
-*/
-
-var server = app.listen(3000, function () {
+var server = app.listen(PORT, function () {
     var host = server.address().address
     var port = server.address().port
     console.log("Example app listening at http://%s:%s", host, port)
