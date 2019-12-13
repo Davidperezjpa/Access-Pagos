@@ -29,15 +29,15 @@ app.post('/charge', function (req,res){
   var chargeAmount = req.body.chargeAmount;
   var charge = stripe.charges.create({
       amount: chargeAmount,
-      currency: "usd",
+      currency: "mxn",
       source: token
   }, function(err, charge){
     if(err & err.type === "StripeCardError"){
       console.log("your card was declined");
     }
   });
+  //refreshReservationPayment(req.body.reservationid);
   console.log("your payment was successful");
-  res.redirect('/paysuccess');
 });
 
 
@@ -46,3 +46,14 @@ var server = app.listen(PORT, function () {
     var port = server.address().port
     console.log("Example app listening at http://%s:%s", host, port)
 });
+/*
+function refreshReservationPayment(reservationid){
+  jQuery.support.cors = true;
+  $.ajax({
+      url: "https://apex.oracle.com/pls/apex/access-a/access/CreateInvitationCode",
+      type: "PUT",
+      dataType: "json",
+      headers: {'reservationid': reservationid, 'paymentstatus': 't'},
+  });
+}
+*/
