@@ -38,7 +38,7 @@ app.post('/charge', function (req,res){
   });
   //refreshReservationPayment(req.body.reservationid);
   console.log("your payment was successful");
-  //res.redirect('/paysuccess');
+  res.redirect('/paysuccess');
 });
 
 
